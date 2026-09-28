@@ -51,6 +51,47 @@ npx serve .
 Do not edit `index.html` by hand — it is compiled output. Make changes in the
 source design file (`Brasserie Bei der Mamm.dc.html`) and re-export.
 
+**One manual addition survives only if you re-apply it after every export:**
+the template's `<head>` loads the menu script, right after the first `<script>`:
+
+```html
+<script src="/menu.js"></script>
+```
+
+In the exported `index.html` this sits inside the JSON-encoded
+`__bundler/template` string as `<script src=\"/menu.js\"></script>`.
+Add it to the design file itself, or re-insert it after exporting.
+
+## Speisekarten (menu cards) — admin at `/admin`
+
+The customer uploads the **Saisonkarte** and the **Klassische Karte** as a PDF or
+photo at `https://<domain>/admin`. Several files per card can be kept; one is
+online at a time. `menu.js` adds a "Speisekarte" section (after "Unser Angebot")
+and a nav link; with no active card the section is hidden.
+
+Backend: Supabase (table `menu_files`, storage bucket `menu-cards`). No server
+code — `admin/index.html` and `menu.js` talk to Supabase directly, and the
+database policies decide who can write.
+
+### Setup (once)
+
+1. Create a Supabase project and run
+   `supabase/migrations/20260928000000_menu_cards.sql` (SQL editor or
+   `supabase db push`).
+2. Put the project URL and the **publishable** key in `supabase-config.js`
+   (both are public by design).
+3. Authentication → Sign In / Providers: turn **off** "Allow new users to sign up".
+4. Authentication → Users → **Add user** for each person (max. 2), with
+   "Auto confirm user" on, and give them their password.
+5. Allow those addresses to upload:
+   ```sql
+   insert into public.menu_admins (email) values ('person@example.lu');
+   ```
+   A login that is not in `menu_admins` can sign in but cannot change anything.
+
+The Supabase project can later be moved to the customer's own organisation
+(Project settings → General → Transfer project); nothing in the site changes.
+
 ## Image credits
 
 Food and interior photography from [Unsplash](https://unsplash.com), used under the

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Speisekarten verwalten — Bei der Mamm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #16233c;
+    --cream: #f5eee0;
+    --sand: #ede3d0;
+    --paper: #faf5ea;
+    --accent: #a67c52;
+    --ok: #2f7a4b;
+    --danger: #a3372f;
+    --muted: rgba(22,35,60,0.65);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--navy); font-family: 'Jost', system-ui, sans-serif; font-size: 18px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  header { background: var(--navy); color: var(--cream); padding: 18px 16px; }
+  header .inner { max-width: 760px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  header h1 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; margin: 0; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+  h2 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 32px; margin: 0 0 4px; }
+  .card { background: var(--paper); border-radius: 6px; box-shadow: 0 8px 30px rgba(22,35,60,0.07); padding: 22px 18px; margin-bottom: 24px; }
+  .hint { color: var(--muted); font-size: 16px; margin: 0 0 18px; }
+  button, .btn { font: inherit; font-size: 17px; border: 0; border-radius: 4px; padding: 14px 20px; cursor: pointer; min-height: 52px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; text-align: center; }
+  .btn-primary { background: var(--navy); color: var(--cream); width: 100%; font-weight: 500; }
+  .btn-light { background: var(--sand); color: var(--navy); }
+  .btn-ghost { background: transparent; color: var(--cream); border: 1px solid rgba(245,238,224,0.4); min-height: 44px; padding: 8px 14px; font-size: 15px; }
+  .btn-danger { background: transparent; color: var(--danger); border: 1px solid rgba(163,55,47,0.35); }
+  button:disabled { opacity: .5; cursor: default; }
+  label.field { display: block; margin-bottom: 16px; font-weight: 500; }
+  label.field input { display: block; width: 100%; margin-top: 6px; font: inherit; padding: 14px; border: 1px solid rgba(22,35,60,0.25); border-radius: 4px; background: #fff; }
+  .upload input[type=file] { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .live { border: 2px solid var(--ok); border-radius: 6px; padding: 14px; margin-bottom: 16px; background: #fff; }
+  .live.none { border-color: rgba(22,35,60,0.2); color: var(--muted); }
+  .badge { display: inline-block; background: var(--ok); color: #fff; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; margin-bottom: 6px; }
+  .fname { font-weight: 500; word-break: break-word; }
+  .date { color: var(--muted); font-size: 15px; }
+  .row-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .row-actions > * { flex: 1 1 auto; white-space: nowrap; }
+  details { margin-top: 18px; }
+  summary { cursor: pointer; font-weight: 500; padding: 8px 0; }
+  .older { border-top: 1px solid rgba(22,35,60,0.12); padding: 14px 0; }
+  .thumb { width: 100%; max-height: 220px; object-fit: contain; object-position: left top; background: var(--sand); border-radius: 4px; margin-top: 10px; }
+  #toast { position: fixed; left: 16px; right: 16px; bottom: 16px; max-width: 728px; margin: 0 auto; background: var(--navy); color: var(--cream); padding: 16px 18px; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,.25); font-size: 17px; display: none; z-index: 10; }
+  #toast.error { background: var(--danger); }
+  .login { max-width: 420px; margin: 8vh auto 0; }
+  .hidden { display: none !important; }
+  .progress { margin-top: 10px; color: var(--muted); font-size: 16px; }
+  a.site { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <h1>Speisekarten</h1>
+    <button id="logout" class="btn-ghost hidden" type="button">Abmelden</button>
+  </div>
+</header>
+
+<main>
+  <div id="not-configured" class="card hidden">
+    <h2>Noch nicht eingerichtet</h2>
+    <p class="hint">In <code>supabase-config.js</code> fehlen die Zugangsdaten.</p>
+  </div>
+
+  <form id="login" class="card login hidden">
+    <h2>Anmelden</h2>
+    <p class="hint">Mit Ihrer E-Mail-Adresse und Ihrem Passwort.</p>
+    <label class="field">E-Mail
+      <input type="email" name="email" autocomplete="username" required>
+    </label>
+    <label class="field">Passwort
+      <input type="password" name="password" autocomplete="current-password" required>
+    </label>
+    <button class="btn-primary" type="submit">Anmelden</button>
+  </form>
+
+  <div id="app" class="hidden">
+    <p class="hint">Laden Sie hier Ihre Karte als PDF oder Foto hoch. Die neue Karte ist sofort auf der <a class="site" href="/#speisekarte" target="_blank" rel="noopener">Website</a> zu sehen.</p>
+    <div id="cards"></div>
+  </div>
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="../supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+(function () {
+  var CARDS = [
+    { key: 'saison', title: 'Saisonkarte' },
+    { key: 'klassisch', title: 'Klassische Karte' },
+  ];
+  var ALLOWED = { pdf: 'application/pdf', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
+
+  var cfg = window.BDM_SUPABASE || {};
+  var $ = function (id) { return document.getElementById(id); };
+
+  if (!cfg.url || !cfg.key) { $('not-configured').classList.remove('hidden'); return; }
+
+  var sb = window.supabase.createClient(cfg.url, cfg.key, { auth: { persistSession: true, autoRefreshToken: true } });
+
+  var toastTimer;
+  function toast(msg, isError) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.className = isError ? 'error' : '';
+    t.style.display = 'block';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.style.display = 'none'; }, isError ? 7000 : 4000);
+  }
+
+  function publicUrl(path) { return sb.storage.from(cfg.bucket).getPublicUrl(path).data.publicUrl; }
+
+  function formatDate(iso) {
+    return new Date(iso).toLocaleDateString('de-LU', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    Object.keys(attrs || {}).forEach(function (k) {
+      if (k === 'text') e.textContent = attrs[k];
+      else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), attrs[k]);
+      else e.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function (c) { if (c) e.appendChild(c); });
+    return e;
+  }
+
+  function fileInfo(f, withBadge) {
+    var isImage = f.mime_type.indexOf('image/') === 0;
+    return [
+      withBadge ? el('span', { 'class': 'badge', text: 'Online' }) : null,
+      el('div', { 'class': 'fname', text: f.label || 'Karte' }),
+      el('div', { 'class': 'date', text: 'Hochgeladen am ' + formatDate(f.created_at) }),
+      isImage ? el('img', { 'class': 'thumb', src: publicUrl(f.storage_path), alt: '' }) : null,
+    ];
+  }
+
+  function viewBtn(f) {
+    return el('a', { 'class': 'btn btn-light', href: publicUrl(f.storage_path), target: '_blank', rel: 'noopener', text: 'Ansehen' });
+  }
+
+  function renderCard(card, files) {
+    var active = files.filter(function (f) { return f.is_active; })[0];
+    var older = files.filter(function (f) { return !f.is_active; });
+
+    var input = el('input', { type: 'file', accept: 'application/pdf,image/jpeg,image/png,image/webp', id: 'file-' + card.key });
+    var progress = el('div', { 'class': 'progress hidden', text: 'Wird hochgeladen …' });
+    input.addEventListener('change', function () {
+      if (input.files[0]) upload(card, input.files[0], progress);
+      input.value = '';
+    });
+
+    var live = active
+      ? el('div', { 'class': 'live' }, fileInfo(active, true).concat([
+          el('div', { 'class': 'row-actions' }, [
+            viewBtn(active),
+            el('button', { 'class': 'btn-light', type: 'button', text: 'Von Website nehmen', onclick: function () { hide(card, active); } }),
+          ]),
+        ]))
+      : el('div', { 'class': 'live none', text: 'Zurzeit ist keine ' + card.title + ' online.' });
+
+    var olderList = older.length
+      ? el('details', {}, [el('summary', { text: 'Frühere Karten (' + older.length + ')' })].concat(older.map(function (f) {
+          return el('div', { 'class': 'older' }, fileInfo(f, false).concat([
+            el('div', { 'class': 'row-actions' }, [
+              el('button', { 'class': 'btn-primary', type: 'button', text: 'Online stellen', onclick: function () { activate(card, f); } }),
+              viewBtn(f),
+              el('button', { 'class': 'btn-danger', type: 'button', text: 'Löschen', onclick: function () { remove(f); } }),
+            ]),
+          ]));
+        })))
+      : null;
+
+    return el('section', { 'class': 'card' }, [
+      el('h2', { text: card.title }),
+      el('p', { 'class': 'hint', text: 'PDF oder Foto, höchstens 20 MB.' }),
+      el('label', { 'class': 'btn btn-primary upload', 'for': 'file-' + card.key }, [document.createTextNode('Neue ' + card.title + ' hochladen'), input]),
+      progress,
+      el('div', { style: 'height:16px' }),
+      live,
+      olderList,
+    ]);
+  }
+
+  function load() {
+    return sb.from('menu_files').select('*').order('created_at', { ascending: false }).then(function (res) {
+      if (res.error) { toast('Karten konnten nicht geladen werden. Bitte Seite neu laden.', true); return; }
+      var box = $('cards');
+      box.innerHTML = '';
+      CARDS.forEach(function (card) {
+        box.appendChild(renderCard(card, res.data.filter(function (f) { return f.card === card.key; })));
+      });
+    });
+  }
+
+  function mimeFor(file) {
+    var ext = (file.name.split('.').pop() || '').toLowerCase();
+    var byExt = ALLOWED[ext];
+    var values = Object.keys(ALLOWED).map(function (k) { return ALLOWED[k]; });
+    if (values.indexOf(file.type) !== -1) return file.type;
+    return byExt || null;
+  }
+
+  function setBusy(busy) {
+    document.querySelectorAll('#cards button, #cards label.upload').forEach(function (b) {
+      if (b.tagName === 'BUTTON') b.disabled = busy; else b.style.pointerEvents = busy ? 'none' : '';
+    });
+  }
+
+  function upload(card, file, progress) {
+    var mime = mimeFor(file);
+    if (!mime) { toast('Bitte eine PDF-Datei oder ein Foto (JPG, PNG) wählen.', true); return; }
+    if (file.size > 20 * 1024 * 1024) { toast('Die Datei ist zu groß (max. 20 MB).', true); return; }
+
+    var ext = Object.keys(ALLOWED).filter(function (k) { return ALLOWED[k] === mime; })[0];
+    var path = card.key + '/' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
+
+    setBusy(true);
+    progress.classList.remove('hidden');
+    sb.storage.from(cfg.bucket).upload(path, file, { contentType: mime, cacheControl: '31536000' })
+      .then(function (res) {
+        if (res.error) throw res.error;
+        return sb.from('menu_files').insert({ card: card.key, label: file.name, storage_path: path, mime_type: mime }).select().single();
+      })
+      .then(function (res) {
+        if (res.error) throw res.error;
+        return sb.rpc('activate_menu_file', { file_id: res.data.id });
+      })
+      .then(function (res) {
+        if (res.error) throw res.error;
+        toast('Fertig! Die neue ' + card.title + ' ist jetzt online.');
+      })
+      .catch(function (e) {
+        console.error(e);
+        toast('Hochladen hat nicht geklappt. Bitte noch einmal versuchen.', true);
+      })
+      .then(function () { progress.classList.add('hidden'); setBusy(false); return load(); });
+  }
+
+  function activate(card, f) {
+    setBusy(true);
+    sb.rpc('activate_menu_file', { file_id: f.id }).then(function (res) {
+      if (res.error) toast('Das hat nicht geklappt. Bitte noch einmal versuchen.', true);
+      else toast('Diese ' + card.title + ' ist jetzt online.');
+      setBusy(false);
+      return load();
+    });
+  }
+
+  function hide(card, f) {
+    if (!confirm('Die ' + card.title + ' von der Website nehmen? Die Datei bleibt gespeichert.')) return;
+    setBusy(true);
+    sb.from('menu_files').update({ is_active: false }).eq('id', f.id).then(function (res) {
+      if (res.error) toast('Das hat nicht geklappt. Bitte noch einmal versuchen.', true);
+      else toast('Die ' + card.title + ' ist nicht mehr auf der Website.');
+      setBusy(false);
+      return load();
+    });
+  }
+
+  function remove(f) {
+    if (!confirm('„' + (f.label || 'Karte') + '“ endgültig löschen?')) return;
+    setBusy(true);
+    sb.storage.from(cfg.bucket).remove([f.storage_path])
+      .then(function (res) {
+        if (res.error) throw res.error;
+        return sb.from('menu_files').delete().eq('id', f.id);
+      })
+      .then(function (res) {
+        if (res.error) throw res.error;
+        toast('Gelöscht.');
+      })
+      .catch(function (e) { console.error(e); toast('Löschen hat nicht geklappt.', true); })
+      .then(function () { setBusy(false); return load(); });
+  }
+
+  function showApp(signedIn) {
+    $('login').classList.toggle('hidden', signedIn);
+    $('app').classList.toggle('hidden', !signedIn);
+    $('logout').classList.toggle('hidden', !signedIn);
+    if (signedIn) load();
+  }
+
+  $('login').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var form = e.target;
+    var btn = form.querySelector('button');
+    btn.disabled = true;
+    sb.auth.signInWithPassword({ email: form.email.value.trim(), password: form.password.value }).then(function (res) {
+      btn.disabled = false;
+      if (res.error) { toast('E-Mail oder Passwort stimmt nicht.', true); return; }
+      form.reset();
+      showApp(true);
+    });
+  });
+
+  $('logout').addEventListener('click', function () {
+    sb.auth.signOut().then(function () { showApp(false); });
+  });
+
+  sb.auth.getSession().then(function (res) { showApp(!!res.data.session); });
+})();
+</script>
+</body>
+</html>
