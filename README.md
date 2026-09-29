@@ -80,14 +80,18 @@ database policies decide who can write.
    `supabase db push`).
 2. Put the project URL and the **publishable** key in `supabase-config.js`
    (both are public by design).
-3. Authentication → Sign In / Providers: turn **off** "Allow new users to sign up".
-4. Authentication → Users → **Add user** for each person (max. 2), with
+3. Authentication → Sign In / Providers: turn **off** "Allow new users to sign up"
+   (and leave anonymous sign-ins off). Otherwise anyone could create an account
+   and, during the test phase, upload.
+4. Authentication → Users → **Add user** for each person, with
    "Auto confirm user" on, and give them their password.
-5. Allow those addresses to upload:
-   ```sql
-   insert into public.menu_admins (email) values ('person@example.lu');
-   ```
-   A login that is not in `menu_admins` can sign in but cannot change anything.
+
+**Test phase:** while `public.menu_admins` is empty, *every* logged-in user may
+upload. **Going live:** add the real addresses — from then on only those can:
+
+```sql
+insert into public.menu_admins (email) values ('person@example.lu');
+```
 
 The Supabase project can later be moved to the customer's own organisation
 (Project settings → General → Transfer project); nothing in the site changes.

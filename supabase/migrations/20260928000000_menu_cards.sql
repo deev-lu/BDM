@@ -16,8 +16,8 @@ create table public.menu_files (
 create unique index menu_files_one_active_per_card
   on public.menu_files (card) where is_active;
 
--- Wer darf hochladen? Nur E-Mail-Adressen in dieser Liste – ein beliebiges
--- Supabase-Konto reicht nicht.
+-- Wer darf hochladen? Solange diese Liste leer ist (Testphase), jeder
+-- eingeloggte Nutzer. Sobald eine Adresse eingetragen ist, nur noch diese.
 create table public.menu_admins (
   email text primary key
 );
@@ -33,10 +33,15 @@ stable
 security definer
 set search_path = ''
 as $$
-  select exists (
-    select 1 from public.menu_admins
-    where lower(email) = lower(auth.jwt() ->> 'email')
-  );
+  select auth.uid() is not null
+    and not coalesce((auth.jwt() ->> 'is_anonymous')::boolean, false)
+    and (
+      not exists (select 1 from public.menu_admins)
+      or exists (
+        select 1 from public.menu_admins
+        where lower(email) = lower(auth.jwt() ->> 'email')
+      )
+    );
 $$;
 
 create policy "Aktive Karten sind öffentlich, Admins sehen alle"
