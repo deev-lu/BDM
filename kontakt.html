@@ -348,6 +348,9 @@
 <style>
   *{box-sizing:border-box;}
   [hidden]{display:none!important;}
+  /* the global a:hover is #16233c — invisible on the near-black footer */
+  footer a{color:#b0895a;}
+  footer a:hover,footer a:focus-visible{color:#f5eee0;text-decoration:underline;}
   html{scroll-behavior:smooth;}
   body{margin:0;background:#f5eee0;color:#16233c;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
   a{color:#a67c52;text-decoration:none;transition:color .2s;}
@@ -521,7 +524,7 @@
         </p>
         <p style="font-size:15px;font-weight:300;color:rgba(245,238,224,0.7);margin:0 0 18px;">
           Nichts passiert? Schreiben Sie uns direkt an
-          <a href="mailto:hallo@beidermamm.lu" style="color:var(--accent);">hallo@beidermamm.lu</a>.
+          <a href="mailto:beidermamm@gmail.com" style="color:var(--accent);">beidermamm@gmail.com</a>.
         </p>
         <button type="button" id="kZurueck" style="background:none;border:1px solid rgba(245,238,224,0.35);color:#f5eee0;padding:12px 24px;border-radius:2px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;">Neue Anfrage</button>
       </div>
@@ -546,7 +549,7 @@
         <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);">Anschrift</div>
         <div style="font-size:18px;">Brasserie Bei der Mamm</div>
         <div style="font-size:18px;">17 Place St. Michel, L-7556 Mersch</div>
-        <div style="font-size:16px;margin-top:8px;"><a href="mailto:hallo@beidermamm.lu">hallo@beidermamm.lu</a></div>
+        <div style="font-size:16px;margin-top:8px;"><a href="mailto:beidermamm@gmail.com">beidermamm@gmail.com</a></div>
       </div>
 
       <div style="margin-top:28px;border-radius:3px;overflow:hidden;border:1px solid rgba(22,35,60,0.15);line-height:0;">
@@ -572,7 +575,7 @@
     <div style="flex:0 1 auto;">
       <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">Kontakt</div>
       <div style="font-size:15px;font-weight:300;line-height:1.9;">
-        17 Place St. Michel<br>L-7556 Mersch<br><a href="mailto:hallo@beidermamm.lu">hallo@beidermamm.lu</a><br><a href="kontakt.html?grund=event-vereinbaren">Private Feiern anfragen</a>
+        17 Place St. Michel<br>L-7556 Mersch<br><a href="mailto:beidermamm@gmail.com">beidermamm@gmail.com</a><br><a href="kontakt.html?grund=event-vereinbaren">Private Feiern anfragen</a>
       </div>
     </div>
     <div style="flex:0 1 auto;">
@@ -657,6 +660,11 @@
   }
 
   function line(label, value) { return value ? label + ': ' + value + '\n' : ''; }
+  function fmtDate(v) {
+    if (!v) return '';
+    var p = v.split('-');
+    return p.length === 3 ? p[2] + '.' + p[1] + '.' + p[0] : v;
+  }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -673,22 +681,49 @@
       return;
     }
 
-    var body = 'Grund der Anfrage: ' + LABELS[v] + '\n\n';
-    if (v === 'tisch-reservieren') {
-      body += line('Datum', $('kDatum').value) + line('Uhrzeit', $('kUhrzeit').value) + line('Personen', $('kPersonen').value);
-      if ($('kKinderstuhl').checked) body += 'Kinderstuhl: ja\n';
-      if ($('kSpielecke').checked) body += 'Platz in der Nähe der Spielecke erwünscht\n';
-      body += '\n';
-    } else if (v === 'event-vereinbaren' || v === 'event-buchen') {
-      body += line('Wunschtermin', $('kEventDatum').value) + line('Gäste', $('kEventGaeste').value)
-            + line('Anlass', $('kAnlass').value.trim()) + line('Umfang', $('kUmfang').value) + '\n';
-    }
-    body += line('Name', $('kName').value.trim()) + line('Kontakt', $('kKontakt').value.trim());
+    var name = $('kName').value.trim();
+    var kontakt = $('kKontakt').value.trim();
     var msg = $('kNachricht').value.trim();
-    if (msg) body += '\nNachricht:\n' + msg + '\n';
 
-    var href = 'mailto:hallo@beidermamm.lu'
-      + '?subject=' + encodeURIComponent(LABELS[v] + ' — ' + $('kName').value.trim())
+    // Subject carries the request type first, then the key fact for that type,
+    // so the inbox list already says what each mail is about.
+    var betreff = '[' + LABELS[v] + ']';
+    if (v === 'tisch-reservieren') {
+      betreff += ' ' + fmtDate($('kDatum').value);
+      if ($('kUhrzeit').value) betreff += ' ' + $('kUhrzeit').value + ' Uhr';
+      betreff += ' · ' + $('kPersonen').value + ' Pers.';
+    } else if (v === 'event-vereinbaren' || v === 'event-buchen') {
+      betreff += ' ' + fmtDate($('kEventDatum').value);
+      if ($('kEventGaeste').value) betreff += ' · ' + $('kEventGaeste').value + ' Gäste';
+      if ($('kAnlass').value.trim()) betreff += ' · ' + $('kAnlass').value.trim();
+    }
+    betreff += ' — ' + name;
+
+    var body = 'ANLIEGEN: ' + LABELS[v].toUpperCase() + '\n';
+    body += '====================================\n\n';
+    if (v === 'tisch-reservieren') {
+      body += 'TISCHRESERVIERUNG\n'
+            + line('  Datum', fmtDate($('kDatum').value))
+            + line('  Uhrzeit', $('kUhrzeit').value ? $('kUhrzeit').value + ' Uhr' : '')
+            + line('  Personen', $('kPersonen').value)
+            + line('  Kinderstuhl', $('kKinderstuhl').checked ? 'ja' : '')
+            + line('  Nähe Spielecke', $('kSpielecke').checked ? 'gewünscht' : '')
+            + '\n';
+    } else if (v === 'event-vereinbaren' || v === 'event-buchen') {
+      body += (v === 'event-buchen' ? 'EVENTBUCHUNG\n' : 'EVENTANFRAGE\n')
+            + line('  Wunschtermin', fmtDate($('kEventDatum').value))
+            + line('  Gäste', $('kEventGaeste').value)
+            + line('  Anlass', $('kAnlass').value.trim())
+            + line('  Umfang', $('kUmfang').value)
+            + '\n';
+    }
+    body += 'KONTAKT\n' + line('  Name', name) + line('  Erreichbar über', kontakt) + '\n';
+    body += 'NACHRICHT\n' + (msg ? msg : '  (keine)') + '\n\n';
+    body += '------------------------------------\n';
+    body += 'Gesendet über das Kontaktformular auf beidermamm.lu\n';
+
+    var href = 'mailto:beidermamm@gmail.com'
+      + '?subject=' + encodeURIComponent(betreff)
       + '&body=' + encodeURIComponent(body);
     window.location.href = href;
     form.hidden = true;
