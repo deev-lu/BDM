@@ -2,17 +2,16 @@
 <html lang="de"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kontakt — Brasserie Bei der Mamm</title>
-<meta name="description" content="Tisch reservieren, eine private Feier anfragen oder eine Frage stellen — das Kontaktformular der Brasserie Bei der Mamm in Mersch passt sich Ihrem Anliegen an.">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://bdm-gamma.vercel.app/kontakt.html">
+<title>Karte — Brasserie Bei der Mamm</title>
+<meta name="description" content="Die reguläre Karte und die wechselnde saisonale Karte der Brasserie Bei der Mamm in Mersch — jeweils als PDF.">
+<link rel="canonical" href="https://bdm-gamma.vercel.app/karte.html">
 <link rel="icon" href="assets/logo.png">
 <link rel="apple-touch-icon" href="assets/logo.png">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_LU">
 <meta property="og:site_name" content="Brasserie Bei der Mamm">
-<meta property="og:title" content="Kontakt — Brasserie Bei der Mamm">
-<meta property="og:description" content="Tisch reservieren, eine private Feier anfragen oder eine Frage stellen.">
+<meta property="og:title" content="Karte — Brasserie Bei der Mamm">
+<meta property="og:description" content="Reguläre Karte und saisonale Karte als PDF.">
 <meta property="og:image" content="https://bdm-gamma.vercel.app/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -348,36 +347,35 @@
 <style>
   *{box-sizing:border-box;}
   [hidden]{display:none!important;}
-  /* the global a:hover is #16233c — invisible on the near-black footer */
-  footer a{color:#b0895a;}
-  footer a:hover,footer a:focus-visible{color:#f5eee0;text-decoration:underline;}
-  @media(max-width:880px){.k-burger{padding:10px;}footer a{display:inline-block;padding:9px 0;}}
   html{scroll-behavior:smooth;}
   body{margin:0;background:#f5eee0;color:#16233c;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
   a{color:#a67c52;text-decoration:none;transition:color .2s;}
   a:hover{color:#16233c;}
   ::selection{background:#16233c;color:#f5eee0;}
   img{max-width:100%;display:block;}
-  input,textarea,button,select{font-family:inherit;}
+  button{font-family:inherit;}
   :root{--accent:#b0895a;}
-  .k-field{display:flex;flex-direction:column;gap:6px;}
-  .k-label{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,238,224,0.7);}
-  .k-input{background:rgba(245,238,224,0.06);border:1px solid rgba(245,238,224,0.25);border-radius:2px;padding:12px 14px;color:#f5eee0;font-size:15px;outline:none;width:100%;}
-  .k-input:focus{border-color:var(--accent);}
-  select.k-input{color-scheme:dark;appearance:none;background-image:linear-gradient(45deg,transparent 50%,rgba(245,238,224,.6) 50%),linear-gradient(135deg,rgba(245,238,224,.6) 50%,transparent 50%);background-position:calc(100% - 20px) 20px,calc(100% - 14px) 20px;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:40px;}
-  select.k-input option{background:#16233c;color:#f5eee0;}
-  input[type=date].k-input,input[type=time].k-input{color-scheme:dark;}
-  .k-hint{font-size:13px;font-weight:300;color:rgba(245,238,224,0.55);margin:0;}
-  .k-row{display:flex;gap:14px;flex-wrap:wrap;}
-  .k-row>*{flex:1 1 150px;}
-  .k-group{display:flex;flex-direction:column;gap:16px;}
-  .k-check{display:flex;align-items:flex-start;gap:10px;font-size:15px;font-weight:300;color:rgba(245,238,224,0.85);cursor:pointer;}
-  .k-check input{margin-top:4px;accent-color:var(--accent);width:16px;height:16px;flex:0 0 auto;}
+  footer a{color:#b0895a;}
+  footer a:hover,footer a:focus-visible{color:#f5eee0;text-decoration:underline;}
+  @media(max-width:880px){.k-burger{padding:10px;}footer a{display:inline-block;padding:9px 0;}}
   .k-nav{display:flex;align-items:center;gap:34px;}
   .k-burger{display:none;background:none;border:0;cursor:pointer;padding:8px;flex-direction:column;gap:5px;}
   .k-burger span{display:block;width:24px;height:1.5px;background:#16233c;}
   @media(max-width:880px){.k-nav{display:none;}.k-burger{display:flex;}}
-  @media(max-width:520px){.k-row{gap:0;}.k-row>*{flex:1 1 100%;margin-bottom:16px;}.k-row>*:last-child{margin-bottom:0;}}
+  /* Tabs */
+  .m-tab{flex:1 1 200px;background:none;border:1px solid rgba(22,35,60,0.2);border-radius:2px;padding:16px 20px;cursor:pointer;text-align:left;transition:background .2s,border-color .2s,color .2s;color:#16233c;}
+  .m-tab:hover{border-color:var(--accent);}
+  .m-tab[aria-selected="true"]{background:#16233c;border-color:#16233c;color:#f5eee0;}
+  .m-tab .m-kicker{display:block;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:5px;}
+  .m-tab .m-name{display:block;font-family:'Cormorant Garamond',serif;font-size:23px;line-height:1.2;}
+  .m-tab .m-sub{display:block;font-size:13px;font-weight:300;opacity:.75;margin-top:4px;}
+  .m-frame{width:100%;height:min(78vh,1000px);border:1px solid rgba(22,35,60,0.15);border-radius:3px;background:#e4dccb;}
+  /* No inline PDF viewer on most phones — offer the file instead of an empty box. */
+  .m-mobile{display:none;}
+  @media(max-width:780px){
+    .m-frame{display:none;}
+    .m-mobile{display:block;}
+  }
 </style>
 
 <!-- ================= HEADER ================= -->
@@ -392,172 +390,86 @@
     </a>
     <nav class="k-nav">
       <a href="index.html#ueber-uns" style="color:#16233c;font-size:15px;letter-spacing:0.06em;">Über uns</a>
-      <a href="karte.html" style="color:#16233c;font-size:15px;letter-spacing:0.06em;">Karte</a>
+      <a href="karte.html" style="color:#a67c52;font-size:15px;letter-spacing:0.06em;">Karte</a>
       <a href="index.html#werte" style="color:#16233c;font-size:15px;letter-spacing:0.06em;">Werte</a>
       <a href="index.html#team" style="color:#16233c;font-size:15px;letter-spacing:0.06em;">Team</a>
       <a href="index.html#feiern" style="color:#16233c;font-size:15px;letter-spacing:0.06em;">Feiern</a>
       <a href="index.html#besuch" style="color:#16233c;font-size:15px;letter-spacing:0.06em;">Besuch</a>
-      <a href="kontakt.html" style="background:#16233c;color:#f5eee0;padding:11px 22px;border-radius:2px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;">Kontakt</a>
+      <a href="kontakt.html?grund=tisch-reservieren" style="background:#16233c;color:#f5eee0;padding:11px 22px;border-radius:2px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;">Reservieren</a>
     </nav>
     <button class="k-burger" id="kBurger" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
   <div id="kMenu" hidden style="border-top:1px solid rgba(22,35,60,0.12);padding:12px 28px 22px;display:flex;flex-direction:column;gap:4px;background:#f5eee0;">
     <a href="index.html#ueber-uns" style="color:#16233c;padding:11px 0;font-size:17px;border-bottom:1px solid rgba(22,35,60,0.08);">Über uns</a>
-    <a href="karte.html" style="color:#16233c;padding:11px 0;font-size:17px;border-bottom:1px solid rgba(22,35,60,0.08);">Karte</a>
+    <a href="karte.html" style="color:#a67c52;padding:11px 0;font-size:17px;border-bottom:1px solid rgba(22,35,60,0.08);">Karte</a>
     <a href="index.html#werte" style="color:#16233c;padding:11px 0;font-size:17px;border-bottom:1px solid rgba(22,35,60,0.08);">Werte</a>
     <a href="index.html#team" style="color:#16233c;padding:11px 0;font-size:17px;border-bottom:1px solid rgba(22,35,60,0.08);">Team</a>
     <a href="index.html#feiern" style="color:#16233c;padding:11px 0;font-size:17px;border-bottom:1px solid rgba(22,35,60,0.08);">Private Feiern</a>
     <a href="index.html#besuch" style="color:#16233c;padding:11px 0;font-size:17px;border-bottom:1px solid rgba(22,35,60,0.08);">Besuch</a>
-    <a href="kontakt.html" style="color:#16233c;padding:11px 0;font-size:17px;">Kontakt</a>
+    <a href="kontakt.html" style="color:#16233c;padding:11px 0;font-size:17px;">Kontakt &amp; Reservierung</a>
   </div>
 </header>
 
-<!-- ================= KONTAKT ================= -->
-<section style="max-width:1220px;margin:0 auto;padding:clamp(48px,7vw,92px) 28px;">
-  <div style="text-align:center;margin-bottom:clamp(32px,5vw,56px);">
-    <div style="font-family:'Petit Formal Script',cursive;font-size:clamp(26px,4vw,38px);color:var(--accent);margin-bottom:4px;">Schreiben Sie uns</div>
-    <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4.5vw,48px);margin:0;">Kontakt</h1>
-    <p style="font-size:16px;font-weight:300;color:rgba(22,35,60,0.7);max-width:620px;margin:16px auto 0;">
-      Sagen Sie uns zuerst, worum es geht — das Formular passt sich Ihrem Anliegen an. Wir melden uns persönlich zurück.
+<!-- ================= KARTE ================= -->
+<section style="max-width:1220px;margin:0 auto;padding:clamp(44px,6vw,84px) 28px;">
+  <div style="text-align:center;margin-bottom:clamp(28px,4vw,44px);">
+    <div style="font-family:'Petit Formal Script',cursive;font-size:clamp(26px,4vw,38px);color:var(--accent);margin-bottom:4px;">Was es bei uns gibt</div>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4.5vw,48px);margin:0;">Unsere Karte</h1>
+    <p style="font-size:16px;font-weight:300;color:rgba(22,35,60,0.7);max-width:640px;margin:16px auto 0;">
+      Die reguläre Karte gilt das ganze Jahr über. Daneben wechselt die saisonale Karte mit dem, was gerade frisch ist.
     </p>
   </div>
 
-  <div style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,56px);align-items:flex-start;">
-
-    <!-- ---------- FORM ---------- -->
-    <div style="flex:1 1 440px;min-width:300px;background:#16233c;color:#f5eee0;border-radius:3px;padding:clamp(28px,4vw,44px);">
-      <form id="kForm" class="k-group" novalidate>
-
-        <div class="k-field">
-          <label class="k-label" for="kGrund">Grund der Anfrage</label>
-          <select id="kGrund" class="k-input" required>
-            <option value="" disabled selected>Bitte wählen …</option>
-            <option value="tisch-reservieren">Tisch reservieren</option>
-            <option value="event-vereinbaren">Event vereinbaren</option>
-            <option value="event-buchen">Event buchen</option>
-            <option value="frage-restaurant">Frage zum Restaurant</option>
-            <option value="frage-menue">Frage zum Menü</option>
-            <option value="frage-saisonales-menue">Frage zum saisonalen Menü</option>
-            <option value="allgemeine-frage">Allgemeine Frage</option>
-          </select>
-        </div>
-
-        <!-- Tischreservierung -->
-        <div id="kBlockTisch" class="k-group" hidden>
-          <div style="border-top:1px solid rgba(245,238,224,0.16);padding-top:18px;">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:22px;">Ihre Tischreservierung</div>
-          </div>
-          <div class="k-row">
-            <div class="k-field">
-              <label class="k-label" for="kDatum">Datum</label>
-              <input id="kDatum" class="k-input" type="date">
-            </div>
-            <div class="k-field">
-              <label class="k-label" for="kUhrzeit">Uhrzeit</label>
-              <input id="kUhrzeit" class="k-input" type="time" step="900">
-            </div>
-            <div class="k-field">
-              <label class="k-label" for="kPersonen">Personen</label>
-              <input id="kPersonen" class="k-input" type="number" min="1" max="20" value="2">
-            </div>
-          </div>
-          <p class="k-hint" id="kOeffnung">Mo – Fr 8 – 17 Uhr · Sa – So 9 – 15 Uhr</p>
-          <label class="k-check"><input type="checkbox" id="kKinderstuhl"><span>Wir brauchen einen Kinderstuhl</span></label>
-          <label class="k-check"><input type="checkbox" id="kSpielecke"><span>Gern in der Nähe der Spielecke</span></label>
-        </div>
-
-        <!-- Event -->
-        <div id="kBlockEvent" class="k-group" hidden>
-          <div style="border-top:1px solid rgba(245,238,224,0.16);padding-top:18px;">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:22px;" id="kEventTitel">Ihre Feier</div>
-          </div>
-          <div class="k-row">
-            <div class="k-field">
-              <label class="k-label" for="kEventDatum">Wunschtermin</label>
-              <input id="kEventDatum" class="k-input" type="date">
-            </div>
-            <div class="k-field">
-              <label class="k-label" for="kEventGaeste">Gäste</label>
-              <input id="kEventGaeste" class="k-input" type="number" min="1" value="20">
-            </div>
-          </div>
-          <div class="k-field">
-            <label class="k-label" for="kAnlass">Anlass</label>
-            <input id="kAnlass" class="k-input" type="text" placeholder="z. B. Geburtstag">
-          </div>
-          <div class="k-field">
-            <label class="k-label" for="kUmfang">Umfang</label>
-            <select id="kUmfang" class="k-input">
-              <option value="">Noch offen</option>
-              <option value="Ganzes Lokal">Ganzes Lokal</option>
-              <option value="Teil des Lokals">Teil des Lokals</option>
-            </select>
-          </div>
-          <p class="k-hint">Preise und Verfügbarkeit stimmen wir persönlich mit Ihnen ab.</p>
-        </div>
-
-        <!-- Kontaktdaten -->
-        <div style="border-top:1px solid rgba(245,238,224,0.16);padding-top:18px;" class="k-group">
-          <div class="k-field">
-            <label class="k-label" for="kName">Name</label>
-            <input id="kName" class="k-input" type="text" placeholder="Ihr Name" required>
-          </div>
-          <div class="k-field">
-            <label class="k-label" for="kKontakt">E-Mail oder Telefon</label>
-            <input id="kKontakt" class="k-input" type="text" placeholder="So erreichen wir Sie" required>
-          </div>
-          <div class="k-field">
-            <label class="k-label" for="kNachricht">Nachricht <span style="text-transform:none;letter-spacing:0;opacity:.6;" id="kNachrichtOpt">(optional)</span></label>
-            <textarea id="kNachricht" class="k-input" rows="4" placeholder="Worum geht es?" style="resize:vertical;"></textarea>
-          </div>
-        </div>
-
-        <p id="kFehler" hidden style="margin:0;border:1px solid #c98b8b;background:rgba(201,139,139,0.12);color:#f0c9c9;border-radius:2px;padding:12px 14px;font-size:14px;font-weight:300;"></p>
-
-        <button type="submit" style="margin-top:2px;background:var(--accent);color:#16233c;border:0;padding:15px;border-radius:2px;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;font-weight:500;cursor:pointer;width:100%;">Anfrage senden</button>
-        <p class="k-hint" style="text-align:center;">Unverbindliche Anfrage · Bestätigung folgt persönlich</p>
-      </form>
-
-      <div id="kDanke" hidden style="border:1px solid var(--accent);border-radius:3px;padding:32px 26px;text-align:center;">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--accent);margin-bottom:8px;">Fast geschafft!</div>
-        <p style="font-size:16px;font-weight:300;color:rgba(245,238,224,0.85);margin:0 0 18px;">
-          Ihr E-Mail-Programm hat sich mit der fertigen Anfrage geöffnet. Bitte schicken Sie die Nachricht dort noch ab — dann ist sie bei uns.
-        </p>
-        <p style="font-size:15px;font-weight:300;color:rgba(245,238,224,0.7);margin:0 0 18px;">
-          Nichts passiert? Schreiben Sie uns direkt an
-          <a href="mailto:beidermamm@gmail.com" style="color:var(--accent);">beidermamm@gmail.com</a>.
-        </p>
-        <button type="button" id="kZurueck" style="background:none;border:1px solid rgba(245,238,224,0.35);color:#f5eee0;padding:12px 24px;border-radius:2px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;">Neue Anfrage</button>
-      </div>
-    </div>
-
-    <!-- ---------- SIDEBAR ---------- -->
-    <div style="flex:1 1 300px;min-width:260px;">
-      <span style="font-size:13px;letter-spacing:0.28em;text-transform:uppercase;color:var(--accent);">Direkt</span>
-      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(26px,3.5vw,34px);margin:10px 0 24px;">Öffnungszeiten &amp; Adresse</h2>
-
-      <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(22,35,60,0.14);">
-        <span style="font-size:16px;">Montag – Freitag</span><span style="font-family:'Cormorant Garamond',serif;font-size:19px;">8 – 17 Uhr</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(22,35,60,0.14);">
-        <span style="font-size:16px;">Samstag – Sonntag</span><span style="font-family:'Cormorant Garamond',serif;font-size:19px;">9 – 15 Uhr</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(22,35,60,0.14);">
-        <span style="font-size:16px;">Wochenendbrunch</span><span style="font-family:'Cormorant Garamond',serif;font-size:19px;">durchgehend 9 – 15 Uhr</span>
-      </div>
-
-      <div style="margin-top:30px;display:flex;flex-direction:column;gap:6px;font-weight:300;">
-        <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);">Anschrift</div>
-        <div style="font-size:18px;">Brasserie Bei der Mamm</div>
-        <div style="font-size:18px;">17 Place St. Michel, L-7556 Mersch</div>
-        <div style="font-size:16px;margin-top:8px;"><a href="mailto:beidermamm@gmail.com">beidermamm@gmail.com</a></div>
-      </div>
-
-      <div style="margin-top:28px;border-radius:3px;overflow:hidden;border:1px solid rgba(22,35,60,0.15);line-height:0;">
-        <img src="assets/aussenansicht.jpg" width="1500" height="1000" loading="lazy" decoding="async" alt="Die Brasserie Bei der Mamm von der Straße: Leuchtschriftzug über den Schaufenstern, davor Kopfsteinpflaster" style="width:100%;height:auto;">
-      </div>
-    </div>
+  <div role="tablist" aria-label="Karten" style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:26px;">
+    <button class="m-tab" id="tab-regular" role="tab" aria-selected="true" aria-controls="panel-regular" type="button">
+      <span class="m-kicker">Das ganze Jahr</span>
+      <span class="m-name">Reguläre Karte</span>
+      <span class="m-sub">Frühstück, Brunch und Getränke</span>
+    </button>
+    <button class="m-tab" id="tab-seasonal" role="tab" aria-selected="false" aria-controls="panel-seasonal" type="button">
+      <span class="m-kicker">Wechselnd</span>
+      <span class="m-name">Saisonale Karte</span>
+      <span class="m-sub">Tagesaktuelle Specials der Saison</span>
+    </button>
   </div>
+
+  <div id="panel-regular" role="tabpanel" aria-labelledby="tab-regular">
+    <object class="m-frame" data="assets/menu/karte.pdf#view=FitH" type="application/pdf" aria-label="Reguläre Karte als PDF">
+      <div style="padding:40px 24px;text-align:center;">
+        <p style="margin:0 0 18px;font-weight:300;">Ihr Browser kann das PDF nicht direkt anzeigen.</p>
+        <a href="assets/menu/karte.pdf" target="_blank" rel="noopener" style="display:inline-block;background:var(--accent);color:#16233c;padding:14px 26px;border-radius:2px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;">Reguläre Karte öffnen</a>
+      </div>
+    </object>
+    <div class="m-mobile" style="border:1px solid rgba(22,35,60,0.15);border-radius:3px;padding:32px 24px;text-align:center;background:#ede3d0;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:10px;">Reguläre Karte</div>
+      <p style="font-size:15px;font-weight:300;color:rgba(22,35,60,0.75);margin:0 0 20px;">Öffnet als PDF in einem neuen Tab.</p>
+      <a href="assets/menu/karte.pdf" target="_blank" rel="noopener" style="display:inline-block;background:var(--accent);color:#16233c;padding:14px 26px;border-radius:2px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;">Karte öffnen</a>
+    </div>
+    <p style="text-align:center;margin:16px 0 0;font-size:14px;font-weight:300;">
+      <a href="assets/menu/karte.pdf" target="_blank" rel="noopener">Reguläre Karte in neuem Tab öffnen (PDF)</a>
+    </p>
+  </div>
+
+  <div id="panel-seasonal" role="tabpanel" aria-labelledby="tab-seasonal" hidden>
+    <object class="m-frame" data="assets/menu/saisonale-karte.pdf#view=FitH" type="application/pdf" aria-label="Saisonale Karte als PDF">
+      <div style="padding:40px 24px;text-align:center;">
+        <p style="margin:0 0 18px;font-weight:300;">Ihr Browser kann das PDF nicht direkt anzeigen.</p>
+        <a href="assets/menu/saisonale-karte.pdf" target="_blank" rel="noopener" style="display:inline-block;background:var(--accent);color:#16233c;padding:14px 26px;border-radius:2px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;">Saisonale Karte öffnen</a>
+      </div>
+    </object>
+    <div class="m-mobile" style="border:1px solid rgba(22,35,60,0.15);border-radius:3px;padding:32px 24px;text-align:center;background:#ede3d0;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:10px;">Saisonale Karte</div>
+      <p style="font-size:15px;font-weight:300;color:rgba(22,35,60,0.75);margin:0 0 20px;">Öffnet als PDF in einem neuen Tab.</p>
+      <a href="assets/menu/saisonale-karte.pdf" target="_blank" rel="noopener" style="display:inline-block;background:var(--accent);color:#16233c;padding:14px 26px;border-radius:2px;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;">Karte öffnen</a>
+    </div>
+    <p style="text-align:center;margin:16px 0 0;font-size:14px;font-weight:300;">
+      <a href="assets/menu/saisonale-karte.pdf" target="_blank" rel="noopener">Saisonale Karte in neuem Tab öffnen (PDF)</a>
+    </p>
+  </div>
+
+  <p style="text-align:center;margin:34px 0 0;font-size:15px;font-weight:300;color:rgba(22,35,60,0.7);">
+    Fragen zur Karte? <a href="kontakt.html?grund=frage-menue">Schreiben Sie uns</a>.
+  </p>
 </section>
 
 <!-- ================= FOOTER ================= -->
@@ -605,150 +517,38 @@
 
 <script>
 (function () {
-  var LABELS = {
-    'tisch-reservieren': 'Tisch reservieren',
-    'event-vereinbaren': 'Event vereinbaren',
-    'event-buchen': 'Event buchen',
-    'frage-restaurant': 'Frage zum Restaurant',
-    'frage-menue': 'Frage zum Menü',
-    'frage-saisonales-menue': 'Frage zum saisonalen Menü',
-    'allgemeine-frage': 'Allgemeine Frage'
-  };
-  // Mo–Fr 08:00–17:00, Sa–So 09:00–15:00 (JS: 0 = Sonntag)
-  function hours(d) {
-    var wd = d.getDay();
-    return (wd === 0 || wd === 6) ? { von: '09:00', bis: '15:00' } : { von: '08:00', bis: '17:00' };
-  }
-  var $ = function (id) { return document.getElementById(id); };
-  var grund = $('kGrund'), form = $('kForm'), danke = $('kDanke'), fehler = $('kFehler');
-  var blockTisch = $('kBlockTisch'), blockEvent = $('kBlockEvent');
-
-  // burger
-  var burger = $('kBurger'), menu = $('kMenu');
+  var burger = document.getElementById('kBurger'), menu = document.getElementById('kMenu');
   burger.addEventListener('click', function () {
     var open = menu.hidden;
     menu.hidden = !open;
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
 
-  function apply() {
-    var v = grund.value;
-    var isTisch = v === 'tisch-reservieren';
-    var isEvent = v === 'event-vereinbaren' || v === 'event-buchen';
-    blockTisch.hidden = !isTisch;
-    blockEvent.hidden = !isEvent;
-    if (isEvent) {
-      $('kEventTitel').textContent = v === 'event-buchen' ? 'Ihre Eventbuchung' : 'Ihre Feier';
+  var tabs = [
+    { btn: document.getElementById('tab-regular'),  panel: document.getElementById('panel-regular'),  key: 'regular' },
+    { btn: document.getElementById('tab-seasonal'), panel: document.getElementById('panel-seasonal'), key: 'seasonal' }
+  ];
+  function select(key, push) {
+    tabs.forEach(function (t) {
+      var on = t.key === key;
+      t.btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.panel.hidden = !on;
+    });
+    if (push) {
+      try { history.replaceState(null, '', key === 'seasonal' ? '?karte=saisonal' : location.pathname); } catch (e) {}
     }
-    // for pure questions the message is the whole point
-    var frei = v && !isTisch && !isEvent;
-    $('kNachrichtOpt').textContent = frei ? '' : '(optional)';
-    $('kNachricht').setAttribute('placeholder', frei ? 'Ihre Frage an uns' : 'Wünsche, Anlass, Anmerkungen …');
-    fehler.hidden = true;
   }
-
-  function syncHours() {
-    var val = $('kDatum').value;
-    if (!val) { $('kOeffnung').textContent = 'Mo – Fr 8 – 17 Uhr · Sa – So 9 – 15 Uhr'; return; }
-    var d = new Date(val + 'T12:00:00');
-    var h = hours(d);
-    var t = $('kUhrzeit');
-    t.min = h.von; t.max = h.bis;
-    var wd = d.getDay();
-    $('kOeffnung').textContent = (wd === 0 || wd === 6)
-      ? 'An diesem Tag geöffnet von 9 bis 15 Uhr — durchgehend Brunch.'
-      : 'An diesem Tag geöffnet von 8 bis 17 Uhr.';
-    if (t.value && (t.value < h.von || t.value > h.bis)) t.value = '';
-  }
-
-  function line(label, value) { return value ? label + ': ' + value + '\n' : ''; }
-  function fmtDate(v) {
-    if (!v) return '';
-    var p = v.split('-');
-    return p.length === 3 ? p[2] + '.' + p[1] + '.' + p[0] : v;
-  }
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var v = grund.value;
-    var miss = [];
-    if (!v) miss.push('den Grund der Anfrage');
-    if (!$('kName').value.trim()) miss.push('Ihren Namen');
-    if (!$('kKontakt').value.trim()) miss.push('eine E-Mail-Adresse oder Telefonnummer');
-    if (v === 'tisch-reservieren' && !$('kDatum').value) miss.push('ein Datum');
-    if ((v === 'event-vereinbaren' || v === 'event-buchen') && !$('kEventDatum').value) miss.push('einen Wunschtermin');
-    if (miss.length) {
-      fehler.textContent = 'Bitte ergänzen Sie noch ' + miss.join(', ') + '.';
-      fehler.hidden = false;
-      return;
-    }
-
-    var name = $('kName').value.trim();
-    var kontakt = $('kKontakt').value.trim();
-    var msg = $('kNachricht').value.trim();
-
-    // Subject carries the request type first, then the key fact for that type,
-    // so the inbox list already says what each mail is about.
-    var betreff = '[' + LABELS[v] + ']';
-    if (v === 'tisch-reservieren') {
-      betreff += ' ' + fmtDate($('kDatum').value);
-      if ($('kUhrzeit').value) betreff += ' ' + $('kUhrzeit').value + ' Uhr';
-      betreff += ' · ' + $('kPersonen').value + ' Pers.';
-    } else if (v === 'event-vereinbaren' || v === 'event-buchen') {
-      betreff += ' ' + fmtDate($('kEventDatum').value);
-      if ($('kEventGaeste').value) betreff += ' · ' + $('kEventGaeste').value + ' Gäste';
-      if ($('kAnlass').value.trim()) betreff += ' · ' + $('kAnlass').value.trim();
-    }
-    betreff += ' — ' + name;
-
-    var body = 'ANLIEGEN: ' + LABELS[v].toUpperCase() + '\n';
-    body += '====================================\n\n';
-    if (v === 'tisch-reservieren') {
-      body += 'TISCHRESERVIERUNG\n'
-            + line('  Datum', fmtDate($('kDatum').value))
-            + line('  Uhrzeit', $('kUhrzeit').value ? $('kUhrzeit').value + ' Uhr' : '')
-            + line('  Personen', $('kPersonen').value)
-            + line('  Kinderstuhl', $('kKinderstuhl').checked ? 'ja' : '')
-            + line('  Nähe Spielecke', $('kSpielecke').checked ? 'gewünscht' : '')
-            + '\n';
-    } else if (v === 'event-vereinbaren' || v === 'event-buchen') {
-      body += (v === 'event-buchen' ? 'EVENTBUCHUNG\n' : 'EVENTANFRAGE\n')
-            + line('  Wunschtermin', fmtDate($('kEventDatum').value))
-            + line('  Gäste', $('kEventGaeste').value)
-            + line('  Anlass', $('kAnlass').value.trim())
-            + line('  Umfang', $('kUmfang').value)
-            + '\n';
-    }
-    body += 'KONTAKT\n' + line('  Name', name) + line('  Erreichbar über', kontakt) + '\n';
-    body += 'NACHRICHT\n' + (msg ? msg : '  (keine)') + '\n\n';
-    body += '------------------------------------\n';
-    body += 'Gesendet über das Kontaktformular auf beidermamm.lu\n';
-
-    var href = 'mailto:beidermamm@gmail.com'
-      + '?subject=' + encodeURIComponent(betreff)
-      + '&body=' + encodeURIComponent(body);
-    window.location.href = href;
-    form.hidden = true;
-    danke.hidden = false;
+  tabs.forEach(function (t) {
+    t.btn.addEventListener('click', function () { select(t.key, true); });
+    t.btn.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      var other = tabs.find(function (x) { return x !== t; });
+      other.btn.focus(); select(other.key, true);
+    });
   });
-
-  $('kZurueck').addEventListener('click', function () {
-    danke.hidden = true; form.hidden = false; fehler.hidden = true;
-  });
-
-  grund.addEventListener('change', apply);
-  $('kDatum').addEventListener('change', syncHours);
-
-  // preselect from ?grund=…
-  var want = new URLSearchParams(window.location.search).get('grund');
-  if (want && LABELS[want]) grund.value = want;
-  apply();
-  syncHours();
-
-  // no dates in the past
-  var today = new Date().toISOString().slice(0, 10);
-  $('kDatum').min = today;
-  $('kEventDatum').min = today;
+  var want = new URLSearchParams(location.search).get('karte');
+  select(want === 'saisonal' ? 'seasonal' : 'regular', false);
 })();
 </script>
 
