@@ -53,6 +53,6 @@ source design file (`Brasserie Bei der Mamm.dc.html`) and re-export.
 
 ## Image credits
 
-Food and interior photography from [Unsplash](https://unsplash.com), used under the
-Unsplash License (free for commercial use, no attribution required). The founders'
-portrait and the logo are property of the client.
+All photography is property of the client: the interior and exterior shots, the
+plated dishes, the founders' portrait and the logo. The Unsplash stock photos the
+first export shipped with have been replaced and removed from the bundle.
